@@ -1,4 +1,4 @@
-package com.kodilla;
+package com.kodilla.Blackjack;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
