@@ -1,4 +1,4 @@
-package com.kodilla.Blackjack;
+package com.kodilla.blackjack;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class BlackjackApplicationTests {
+public class BlackjackApplicationApplicationTests {
 
 	@Test
 	public void contextLoads() {

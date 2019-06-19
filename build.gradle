@@ -1,13 +1,16 @@
 plugins {
 	id 'org.springframework.boot' version '2.1.4.RELEASE'
 	id 'java'
+	id 'idea'
+	id 'org.openjfx.javafxplugin' version '0.0.7'
 }
 
 apply plugin: 'io.spring.dependency-management'
 
 group = 'com.kodilla'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = '12'
+targetCompatibility = '12'
 
 repositories {
 	mavenCentral()
@@ -15,5 +18,16 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.openjfx:javafx-base:12.0.1-win'
+	implementation 'org.openjfx:javafx-graphics:12.0.1-win'
+	implementation 'org.openjfx:javafx-controls:12.0.1-win'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
+
+idea {
+	module {
+		downloadJavadoc = true
+		//downloadJava = true
+	}
+}
+
