@@ -1,7 +1,8 @@
 plugins {
-	id 'org.springframework.boot' version '2.1.4.RELEASE'
+	id 'org.springframework.boot' version '2.1.5.RELEASE'
 	id 'java'
 	id 'idea'
+	id 'application'
 	id 'org.openjfx.javafxplugin' version '0.0.7'
 }
 
@@ -18,16 +19,17 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
-	implementation 'org.openjfx:javafx-base:12.0.1-win'
-	implementation 'org.openjfx:javafx-graphics:12.0.1-win'
-	implementation 'org.openjfx:javafx-controls:12.0.1-win'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+javafx {
+	version = '12.0.1'
+	modules = ['javafx.base', 'javafx.graphics', 'javafx.controls', 'javafx.fxml']
 }
 
 idea {
 	module {
 		downloadJavadoc = true
-		//downloadJava = true
 	}
 }
-
+mainClassName = 'com.kodilla.blackjack/com.kodilla.blackjack.BlackjackApplication'
