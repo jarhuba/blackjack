@@ -13,8 +13,9 @@ import javafx.stage.Stage;
 
 public class BlackjackApplication extends Application {
 
-    private Image rawImageBack = new Image("file:src/main/resources/table.png");
-    private Image card = new Image("file:src/main/resources/cards/PNG-cards-1.3/2_of_clubs.png");
+    public static final String IMG_PATH = "file:src/main/resources";
+    private Image rawImageBack = new Image(IMG_PATH+"/table.png");
+    private Image card = new Image(IMG_PATH+ "/cards/2_of_clubs.png");
     private FlowPane cards = new FlowPane(Orientation.HORIZONTAL);
 
     public static void main(String[] args) {
@@ -30,18 +31,21 @@ public class BlackjackApplication extends Application {
         Background background = new Background(backgroundImage);
 
         GridPane grid = new GridPane();
-        grid.setBackground(background);
         grid.setAlignment(Pos.CENTER);
         grid.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
         grid.setHgap(5.5);
         grid.setVgap(5.5);
         grid.setBackground(background);
+        grid.setGridLinesVisible(true);
 
         ImageView img = new ImageView(card);
         img.setSmooth(true);
+        img.setFitHeight(300.0);
+        img.setPreserveRatio(true);
+
         cards.getChildren().add(img);
 
-        grid.add(cards, 0, 0, 3, 1);
+        grid.add(img, 0, 0, 1, 1);
 
         Scene scene = new Scene(grid, 1597, 898, Color.BLACK);
         primaryStage.setTitle("BlackJack");
