@@ -15,8 +15,7 @@ public class BlackjackApplication extends Application {
 
     public static final String IMG_PATH = "file:src/main/resources";
     private Image rawImageBack = new Image(IMG_PATH+"/table.png");
-    private Image card = new Image(IMG_PATH+ "/cards/2_of_clubs.png");
-    private FlowPane cards = new FlowPane(Orientation.HORIZONTAL);
+    public static FlowPane cards = new FlowPane(Orientation.HORIZONTAL);
 
     public static void main(String[] args) {
         launch(args);
@@ -38,20 +37,17 @@ public class BlackjackApplication extends Application {
         grid.setBackground(background);
         grid.setGridLinesVisible(true);
 
-        ImageView img = new ImageView(card);
-        img.setSmooth(true);
-        img.setFitHeight(300.0);
-        img.setPreserveRatio(true);
-
-        cards.getChildren().add(img);
-
-        grid.add(img, 0, 0, 1, 1);
+        grid.add(cards, 0, 0, 1, 1);
 
         Scene scene = new Scene(grid, 1597, 898, Color.BLACK);
         primaryStage.setTitle("BlackJack");
         primaryStage.setScene(scene);
-        //primaryStage.setResizable(false);
+        primaryStage.setResizable(false);
         primaryStage.show();
+
+        GameController gc = new GameController();
+        gc.startGame();
+
     }
 
     @Override
