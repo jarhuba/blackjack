@@ -23,7 +23,7 @@ public class Deck {
         shuffle();
     }
 
-    public void addCard(Card card) {
+    private void addCard(Card card) {
         deck.add(card);
     }
 
@@ -42,7 +42,7 @@ public class Deck {
             return deck.get(index++);
     }
 
-    public void shuffle() {
+    private void shuffle() {
         Collections.shuffle(deck);
     }
 
@@ -52,5 +52,13 @@ public class Deck {
 
     int numberOfCardRemaining() {
         return deck.size() - index + 1;
+    }
+
+    public List<Card> getDeck() {
+        return deck;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }

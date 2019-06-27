@@ -5,7 +5,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -14,8 +14,8 @@ import javafx.stage.Stage;
 public class BlackjackApplication extends Application {
 
     public static final String IMG_PATH = "file:src/main/resources";
-    private Image rawImageBack = new Image(IMG_PATH+"/table.png");
-    public static FlowPane cards = new FlowPane(Orientation.HORIZONTAL);
+    public static FlowPane playerCards = new FlowPane(Orientation.VERTICAL);
+    public static FlowPane dealerCards = new FlowPane(Orientation.VERTICAL);
 
     public static void main(String[] args) {
         launch(args);
@@ -23,9 +23,9 @@ public class BlackjackApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        ImageView imageback = new ImageView(rawImageBack);
+        ImageView imageback = new ImageView(IMG_PATH+"/table.png");
         imageback.setPreserveRatio(true);
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, false, false, true, false);
+        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage backgroundImage = new BackgroundImage(imageback.getImage(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         Background background = new Background(backgroundImage);
 
@@ -37,16 +37,20 @@ public class BlackjackApplication extends Application {
         grid.setBackground(background);
         grid.setGridLinesVisible(true);
 
-        grid.add(cards, 0, 0, 1, 1);
+        grid.add(playerCards, 0, 0, 1 ,1);
+        grid.add(dealerCards, 0, 1, 1, 1);
+        //grid.add(drawCard,0,2,1,1);
+        //Button drawCard = new Button("Pobierz kartę");
 
         Scene scene = new Scene(grid, 1597, 898, Color.BLACK);
-        primaryStage.setTitle("BlackJack");
         primaryStage.setScene(scene);
+        primaryStage.setTitle("BlackJack");
         primaryStage.setResizable(false);
         primaryStage.show();
 
         GameController gc = new GameController();
         gc.startGame();
+        gc.playerMove();
 
     }
 
