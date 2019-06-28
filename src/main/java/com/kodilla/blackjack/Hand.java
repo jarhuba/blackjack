@@ -6,13 +6,15 @@ import java.util.List;
 public class Hand {
 
     private List<Card> cardList;
-    private String playerName;
+    private String name;
     private int handValue;
+    private boolean busted;
 
-    public Hand(String playerName) {
-        this.playerName = playerName;
+    public Hand(String name) {
+        this.name = name;
         cardList = new ArrayList<>();
         this.handValue = 0;
+        busted = false;
     }
 
     void addCard(Deck deck) {
@@ -25,10 +27,12 @@ public class Hand {
     }
 
 
-    public int evaluateHand() {
+    public void evaluateHand() {
+        handValue = 0;
         for (Card c : cardList) {
             if (!c.rank.getRank().equals(Rank.ACE)) {
                 handValue += c.rank.getValue();
+                System.out.println(handValue);
             } else {
                 if (handValue <= 10) {
                     handValue += 11;
@@ -37,7 +41,16 @@ public class Hand {
                 }
             }
         }
-        return handValue;
+        System.out.println("handValue: " + handValue);
+        if (this.handValue > 21) {
+            busted = true;
+        }
+    }
+
+    public void clearHand() {
+        cardList.clear();
+        busted = false;
+        handValue = 0;
     }
 //    void evaluateHand(int playerTotal, int dealerTotal) {
 //        String hand = null;
@@ -64,8 +77,16 @@ public class Hand {
         return cardList;
     }
 
-    public String getPlayerName() {
-        return playerName;
+    public int getHandValue() {
+        return handValue;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public boolean isBusted() {
+        return busted;
     }
 }
 

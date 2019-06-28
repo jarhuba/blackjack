@@ -50,10 +50,6 @@ public class Deck {
         index = 0;
     }
 
-    int numberOfCardRemaining() {
-        return deck.size() - index + 1;
-    }
-
     public List<Card> getDeck() {
         return deck;
     }

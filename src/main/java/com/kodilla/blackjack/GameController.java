@@ -13,7 +13,7 @@ public class GameController {
         this.deck = new Deck(1);
     }
 
-    public void startGame() throws Exception {
+    public void startGame() {
         System.out.println("zaczynasz grę");
         player = new Hand("Gracz");
         dealer = new Hand("Krupier");
@@ -21,6 +21,8 @@ public class GameController {
             player.addCard(deck);
             dealer.addCard(deck);
         }
+        player.evaluateHand();
+        dealer.evaluateHand();
         updateCardView();
     }
 
@@ -37,17 +39,47 @@ public class GameController {
     }
 
     public void playerMove() {
-        if (player.evaluateHand() < 21) {
+        if (player.getHandValue() < 21) {
             player.addCard(deck);
+            player.evaluateHand();
             updateCardView();
         } else {
-            //dealer move
+            if (player.isBusted()) {
+                evaluateWinner();
+            } else {
+                dealerMove();
+            }
         }
+    }
 
-
+    public void dealerMove() {
+        dealer.evaluateHand();
+        if (dealer.getHandValue() < 16) {
+            dealer.addCard(deck);
+            dealer.evaluateHand();
+            updateCardView();
+            dealerMove();
+        } else {
+            System.out.println("Wygrał " + evaluateWinner().getName());
+        }
     }
 
     public void endGame() {
-        Button exitButton = new Button("End Game");
+    }
+
+    private Hand evaluateWinner() {
+        System.out.println("player:" + player.getHandValue() + " vs krupier:" + dealer.getHandValue());
+        if (player.getHandValue() > dealer.getHandValue() && !player.isBusted()) {
+            return dealer;
+        } else {
+            return player;
+        }
+    }
+
+    public void newGame() {
+        player.clearHand();
+        dealer.clearHand();
+        updateCardView();
+        startGame();
     }
 }

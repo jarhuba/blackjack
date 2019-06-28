@@ -1,11 +1,14 @@
 package com.kodilla.blackjack;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -16,6 +19,7 @@ public class BlackjackApplication extends Application {
     public static final String IMG_PATH = "file:src/main/resources";
     public static FlowPane playerCards = new FlowPane(Orientation.VERTICAL);
     public static FlowPane dealerCards = new FlowPane(Orientation.VERTICAL);
+    public static Label whoWins = new Label("Wygrał...");
 
     public static void main(String[] args) {
         launch(args);
@@ -23,24 +27,31 @@ public class BlackjackApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        ImageView imageback = new ImageView(IMG_PATH+"/table.png");
+        ImageView imageback = new ImageView(IMG_PATH + "/table.png");
         imageback.setPreserveRatio(true);
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage backgroundImage = new BackgroundImage(imageback.getImage(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         Background background = new Background(backgroundImage);
 
         GridPane grid = new GridPane();
-        grid.setAlignment(Pos.CENTER);
-        grid.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));
+        grid.setAlignment(Pos.TOP_LEFT);
+        grid.setPadding(new Insets(5, 5, 5, 5));
         grid.setHgap(5.5);
         grid.setVgap(5.5);
         grid.setBackground(background);
         grid.setGridLinesVisible(true);
 
-        grid.add(playerCards, 0, 0, 1 ,1);
+        grid.add(playerCards, 0, 0, 1, 1);
         grid.add(dealerCards, 0, 1, 1, 1);
-        //grid.add(drawCard,0,2,1,1);
-        //Button drawCard = new Button("Pobierz kartę");
+
+        Button drawCardButton = new Button("Wyłóż kolejną kartę");
+        Button enoughtCardButton = new Button("Kończę kolejkę");
+        Button newGameButton = new Button("Nowa gra");
+        Button endGameButton = new Button("Koniec gry");
+        grid.add(drawCardButton, 0, 2, 1, 1);
+        grid.add(enoughtCardButton, 0, 3, 1, 1);
+        grid.add(newGameButton, 0, 4, 1, 1);
+        grid.add(endGameButton, 0, 5, 1, 1);
 
         Scene scene = new Scene(grid, 1597, 898, Color.BLACK);
         primaryStage.setScene(scene);
@@ -49,9 +60,11 @@ public class BlackjackApplication extends Application {
         primaryStage.show();
 
         GameController gc = new GameController();
+        drawCardButton.setOnAction(e -> gc.playerMove());
+        enoughtCardButton.setOnAction((e -> gc.dealerMove()));
+        newGameButton.setOnAction((e -> gc.newGame()));
+        endGameButton.setOnAction((e -> gc.endGame()));
         gc.startGame();
-        gc.playerMove();
-
     }
 
     @Override
