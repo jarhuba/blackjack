@@ -32,4 +32,4 @@ idea {
 		downloadJavadoc = true
 	}
 }
-mainClassName = 'com.kodilla.blackjack/com.kodilla.blackjack.BlackjackApplication'
+mainClassName = 'blackjack.main/com.kodilla.blackjack.BlackjackApplication'

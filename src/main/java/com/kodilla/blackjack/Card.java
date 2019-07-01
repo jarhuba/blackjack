@@ -32,7 +32,7 @@ public class Card {
         ImageView img = new ImageView(getFilename(getColor(), getRank()));
         img.setPreserveRatio(true);
         img.setSmooth(true);
-        img.setFitHeight(300.0);
+        img.setFitHeight(250.0);
         return img;
     }
 }
