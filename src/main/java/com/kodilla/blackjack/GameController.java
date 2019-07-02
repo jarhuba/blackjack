@@ -1,5 +1,7 @@
 package com.kodilla.blackjack;
 
+import javafx.application.Platform;
+import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 
 
@@ -11,18 +13,16 @@ public class GameController {
 
     public GameController() {
         this.deck = new Deck(1);
+        this.player = new Hand("Gracz");
+        this.dealer = new Hand("Krupier");
     }
 
     public void startGame() {
         System.out.println("zaczynasz grę");
-        player = new Hand("Gracz");
-        dealer = new Hand("Krupier");
         for (int i = 0; i < 2; i++) {
             player.addCard(deck);
             dealer.addCard(deck);
         }
-        player.evaluateHand();
-        dealer.evaluateHand();
         updateCardView();
     }
 
@@ -41,7 +41,6 @@ public class GameController {
     public void playerMove() {
         if (player.getHandValue() < 21) {
             player.addCard(deck);
-            player.evaluateHand();
             updateCardView();
         } else {
             if (player.isBusted()) {
@@ -64,22 +63,38 @@ public class GameController {
         }
     }
 
+    public void discardMove() {
+        player.discardHand();
+        dealerMove();
+    }
+
     public void endGame() {
+        Platform.exit();
+        System.exit(0);
     }
 
     private Hand evaluateWinner() {
         System.out.println("player:" + player.getHandValue() + " vs krupier:" + dealer.getHandValue());
-        if (player.getHandValue() > dealer.getHandValue() && !player.isBusted()) {
+        System.out.println("player:" + player.isBusted() + " vs krupier:" + dealer.isBusted());
+        if (player.isBusted()) {
             return dealer;
-        } else {
+        } else if (dealer.isBusted()) {
+            return player;
+        } else if (player.getHandValue() == dealer.getHandValue()) {
+            return dealer;
+        } else if (player.getHandValue() < dealer.getHandValue()) {
+            return dealer;
+        } else if (player.getHandValue() > dealer.getHandValue()) {
             return player;
         }
+        return dealer;
     }
 
     public void newGame() {
         player.clearHand();
         dealer.clearHand();
         updateCardView();
+        this.deck = new Deck(1);
         startGame();
     }
 }

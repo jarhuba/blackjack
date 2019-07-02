@@ -19,20 +19,18 @@ public class Hand {
 
     void addCard(Deck deck) {
         cardList.add(deck.dealCard());
+        evaluateHand();
     }
 
     void discardHand() {
-        //    evaluateHand();
         System.out.println("ruch krupiera");
     }
-
 
     public void evaluateHand() {
         handValue = 0;
         for (Card c : cardList) {
             if (!c.rank.getRank().equals(Rank.ACE)) {
                 handValue += c.rank.getValue();
-                System.out.println(handValue);
             } else {
                 if (handValue <= 10) {
                     handValue += 11;
@@ -41,10 +39,11 @@ public class Hand {
                 }
             }
         }
-        System.out.println("handValue: " + handValue);
+
         if (this.handValue > 21) {
             busted = true;
         }
+        System.out.println("Hand:" + handValue);
     }
 
     public void clearHand() {
@@ -52,26 +51,6 @@ public class Hand {
         busted = false;
         handValue = 0;
     }
-//    void evaluateHand(int playerTotal, int dealerTotal) {
-//        String hand = null;
-//        String dealer = null;
-//        System.out.println("Karty gracza: " + hand);
-//        System.out.println("Karty krupiera: " + dealer);
-//
-//        if (playerTotal == 21) {
-//            System.out.println("Wygrałeś");
-//            //      status.setText("Wygrałeś");
-//        } else if (dealerTotal <= 21 && playerTotal == dealerTotal) {
-//            System.out.println("Remis");
-//            //      status.setText("Remis");
-//        } else if (dealerTotal <= 21 && playerTotal <= dealerTotal) {
-//            System.out.println("Przegrałeś");
-//            //      status.setText("Przegrałeś");
-//        } else {
-//            System.out.println("Wygrałeś");
-//            //      status.setText("Wygrałeś");
-//        }
-//    }
 
     public List<Card> getCardList() {
         return cardList;

@@ -10,6 +10,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
@@ -29,7 +32,14 @@ public class BlackjackApplication extends Application {
 
         playerCards = new FlowPane(Orientation.VERTICAL);
         dealerCards = new FlowPane(Orientation.VERTICAL);
+        playerCards.setMaxHeight(250);
+        dealerCards.setMaxHeight(250);
         whoWins = new Label("Wygrał...");
+        whoWins.setAlignment(Pos.CENTER);
+        whoWins.setFont(Font.font(25));
+        whoWins.setStyle("-fx-background-color: #C9FFE5;");
+
+
 
         String javaVersion = System.getProperty("java.version");
         String javafxVersion = System.getProperty("javafx.version");
@@ -42,10 +52,9 @@ public class BlackjackApplication extends Application {
         Background background = new Background(backgroundImage);
 
         GridPane grid = new GridPane();
-        grid.setAlignment(Pos.TOP_LEFT);
+        grid.setAlignment(Pos.TOP_CENTER);
         grid.setPadding(new Insets(5, 5, 5, 5));
-        grid.setHgap(5.5);
-        grid.setVgap(5.5);
+        grid.setVgap(10);
         grid.setBackground(background);
         grid.setGridLinesVisible(true);
 
@@ -53,21 +62,20 @@ public class BlackjackApplication extends Application {
         Button enoughtCardButton = new Button("Kończę kolejkę");
         Button newGameButton = new Button("Nowa gra");
         Button endGameButton = new Button("Koniec gry");
-        //Label playerInfo = new Label("TEST");
-        //playerInfo.setLabelFor(endGameButton);
-        //playerCards.getChildren().add(playerInfo);
+        Text playerInfo = new Text("TESTTESTTESTTESTTESTTESTTEST");
+        Text playerInfo2 = new Text("TESTTESTTESTTESTTESTTESTTEST");
 
 
-        grid.add(playerCards, 0, 0, 1, 1);
-        //grid.add(playerInfo,0,1,1,1);
-        grid.add(dealerCards, 0, 2, 1, 1);
-        //grid.add(playerInfo,0,1,1,1);
+        grid.add(whoWins,0,0);
+        grid.add(playerCards, 0, 1);
+        grid.add(playerInfo,0,2);
+        grid.add(dealerCards, 0, 3);
+        grid.add(playerInfo2,0,4);
 
-
-        grid.add(drawCardButton, 0, 4, 1, 1);
-        grid.add(enoughtCardButton, 0, 5, 1, 1);
-        grid.add(newGameButton, 0, 6, 1, 1);
-        grid.add(endGameButton, 0, 7, 1, 1);
+        grid.add(drawCardButton, 0, 5);
+        grid.add(enoughtCardButton, 0, 6);
+        grid.add(newGameButton, 0, 7);
+        grid.add(endGameButton, 0, 8);
 
         Scene scene = new Scene(grid, 1597, 898, Color.BLACK);
         primaryStage.setScene(scene);
@@ -77,15 +85,9 @@ public class BlackjackApplication extends Application {
 
         GameController gc = new GameController();
         drawCardButton.setOnAction(e -> gc.playerMove());
-        enoughtCardButton.setOnAction((e -> gc.dealerMove()));
-        newGameButton.setOnAction((e -> gc.newGame()));
-        endGameButton.setOnAction((e -> gc.endGame()));
+        enoughtCardButton.setOnAction(e -> gc.discardMove());
+        newGameButton.setOnAction(e -> gc.newGame());
+        endGameButton.setOnAction(e -> gc.endGame());
         gc.startGame();
-    }
-
-    @Override
-    public void stop() throws Exception {
-        System.out.println("Koniec działania aplikacji");
-        super.stop();
     }
 }
