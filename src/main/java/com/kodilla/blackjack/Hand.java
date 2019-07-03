@@ -29,7 +29,7 @@ public class Hand {
     public void evaluateHand() {
         handValue = 0;
         for (Card c : cardList) {
-            if (!c.rank.getRank().equals(Rank.ACE)) {
+            if (!c.rank.getRank().equals(Rank.ACE.rank)) {
                 handValue += c.rank.getValue();
             } else {
                 if (handValue <= 10) {
@@ -43,7 +43,11 @@ public class Hand {
         if (this.handValue > 21) {
             busted = true;
         }
-        System.out.println("Hand:" + handValue);
+        if (name.equals("Krupier")) {
+            BlackjackApplication.DEALER_INFO.setText("" + handValue);
+        } else {
+            BlackjackApplication.PLAYER_INFO.setText("" + handValue);
+        }
     }
 
     public void clearHand() {

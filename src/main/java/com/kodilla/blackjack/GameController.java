@@ -1,9 +1,6 @@
 package com.kodilla.blackjack;
 
 import javafx.application.Platform;
-import javafx.geometry.Orientation;
-import javafx.scene.control.Button;
-
 
 public class GameController {
 
@@ -27,14 +24,14 @@ public class GameController {
     }
 
     private void updateCardView() {
-        BlackjackApplication.playerCards.getChildren().clear();
-        BlackjackApplication.dealerCards.getChildren().clear();
+        BlackjackApplication.PLAYER_CARDS.getChildren().clear();
+        BlackjackApplication.DEALER_CARDS.getChildren().clear();
 
         for (int i = 0; i < player.getCardList().size(); i++) {
-            BlackjackApplication.playerCards.getChildren().add(player.getCardList().get(i).getCardImage());
+            BlackjackApplication.PLAYER_CARDS.getChildren().add(player.getCardList().get(i).getCardImage());
         }
         for (int i = 0; i < dealer.getCardList().size(); i++) {
-            BlackjackApplication.dealerCards.getChildren().add(dealer.getCardList().get(i).getCardImage());
+            BlackjackApplication.DEALER_CARDS.getChildren().add(dealer.getCardList().get(i).getCardImage());
         }
     }
 
@@ -46,20 +43,29 @@ public class GameController {
             if (player.isBusted()) {
                 evaluateWinner();
             } else {
-                dealerMove();
+                discardMove();
             }
         }
     }
 
     public void dealerMove() {
         dealer.evaluateHand();
-        if (dealer.getHandValue() < 16) {
+        if (dealer.getHandValue() > player.getHandValue() && !player.isBusted()) {
+            BlackjackApplication.WHOWINS.setText( "Wygrał " + evaluateWinner().getName());
+        }
+        if (dealer.getHandValue() < player.getHandValue()) {
+            dealer.addCard(deck);
+            dealer.evaluateHand();
+            updateCardView();
+            dealerMove();
+        }
+        else if (dealer.getHandValue() < 16) {
             dealer.addCard(deck);
             dealer.evaluateHand();
             updateCardView();
             dealerMove();
         } else {
-            System.out.println("Wygrał " + evaluateWinner().getName());
+            BlackjackApplication.WHOWINS.setText( "Wygrał " + evaluateWinner().getName());
         }
     }
 
@@ -74,8 +80,8 @@ public class GameController {
     }
 
     private Hand evaluateWinner() {
-        System.out.println("player:" + player.getHandValue() + " vs krupier:" + dealer.getHandValue());
-        System.out.println("player:" + player.isBusted() + " vs krupier:" + dealer.isBusted());
+        System.out.println(player.getName() + ": " + player.getHandValue() + " vs " + dealer.getName() + ": " + dealer.getHandValue());
+        System.out.println(player.getName() + ": " + player.isBusted() + " vs " + dealer.getName() + ": " + dealer.isBusted());
         if (player.isBusted()) {
             return dealer;
         } else if (dealer.isBusted()) {
@@ -96,5 +102,6 @@ public class GameController {
         updateCardView();
         this.deck = new Deck(1);
         startGame();
+        BlackjackApplication.WHOWINS.setText("Wygrał...");
     }
 }

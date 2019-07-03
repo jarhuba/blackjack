@@ -2,6 +2,8 @@ package com.kodilla.blackjack;
 
 import javafx.scene.image.ImageView;
 
+import java.util.Objects;
+
 public class Card {
 
     Rank rank;
@@ -66,7 +68,7 @@ enum Rank {
     JACK("jack", 10),
     QUEEN("queen", 10),
     KING("king", 10),
-    ACE("ace", 0);
+    ACE("ace", 1);
 
     String rank;
     int value;
@@ -83,4 +85,6 @@ enum Rank {
     public int getValue() {
         return value;
     }
+
+
 }
